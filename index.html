@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Swapnadeep Paty | ML · Robotics · Future Systems</title>
+  <!-- Font Awesome 6 for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+      background: #03071e;
+      color: #e2e8f0;
+      line-height: 1.5;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* Futuristic gradient background animation */
+    .aurora-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 20%, #1e1b4b, #03071e 60%);
+      z-index: -2;
+      opacity: 0.9;
+    }
+
+    .grid-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* Glassmorphism base */
+    .glass-card {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 2rem;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    /* Navigation */
+    header {
+      position: sticky;
+      top: 1.5rem;
+      z-index: 100;
+      margin: 1.5rem 2rem 0 2rem;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2.5rem;
+      background: rgba(10, 15, 35, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      border-radius: 4rem;
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
+    }
+
+    nav h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #a5b4fc, #6366f1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.5px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2.5rem;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #cbd5e1;
+      font-weight: 500;
+      font-size: 1.1rem;
+      position: relative;
+      padding: 0.3rem 0;
+      transition: color 0.3s;
+    }
+
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #818cf8;
+      box-shadow: 0 0 12px #818cf8;
+      transition: width 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #e0e7ff;
+    }
+
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero section */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 3rem;
+      padding: 5rem 3rem;
+      margin: 2rem 2rem 0;
+    }
+
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .hero-text h2 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      background: linear-gradient(to right, #f0e9ff, #c4b5fd, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+      letter-spacing: -1px;
+    }
+
+    .hero-text p {
+      font-size: 1.4rem;
+      color: #a5b4fc;
+      margin-bottom: 2.5rem;
+      font-weight: 400;
+    }
+
+    .btn {
+      padding: 0.9rem 2.5rem;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      border: none;
+      color: white;
+      text-decoration: none;
+      border-radius: 3rem;
+      font-weight: 600;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+      transition: all 0.3s ease;
+      display: inline-block;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px #4f46e5aa;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    }
+
+    .hero-img img {
+      width: 280px;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: 0 0 50px rgba(99, 102, 241, 0.5);
+      border: 3px solid rgba(165, 180, 252, 0.6);
+      transition: transform 0.4s ease, box-shadow 0.4s;
+    }
+
+    .hero-img img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 70px #818cf8;
+    }
+
+    /* Sections */
+    section {
+      padding: 3rem 2.5rem;
+      margin: 1rem 2rem;
+    }
+
+    h2 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 2.5rem;
+      background: linear-gradient(180deg, #ddd6fe, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-block;
+      border-bottom: 2px solid rgba(99, 102, 241, 0.4);
+      padding-bottom: 0.5rem;
+    }
+
+    /* About */
+    #about p {
+      font-size: 1.25rem;
+      max-width: 800px;
+      background: rgba(30, 41, 59, 0.5);
+      backdrop-filter: blur(12px);
+      padding: 2rem;
+      border-radius: 2rem;
+      border: 1px solid #4f46e5;
+      color: #e2e8f0;
+    }
+
+    /* Cards layout */
+    .experience-grid, .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    .card, .project-card {
+      background: rgba(20, 30, 50, 0.5);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(129, 140, 248, 0.25);
+      border-radius: 2rem;
+      padding: 2rem 1.5rem;
+      transition: all 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -8px rgba(0,0,0,0.5);
+    }
+
+    .card::before, .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.15), transparent);
+      transition: left 0.7s ease;
+    }
+
+    .card:hover::before, .project-card:hover::before {
+      left: 100%;
+    }
+
+    .card:hover, .project-card:hover {
+      transform: translateY(-12px);
+      border-color: #a78bfa;
+      box-shadow: 0 25px 45px -10px #4f46e5, 0 0 0 1px rgba(165, 180, 252, 0.5);
+      background: rgba(30, 40, 65, 0.7);
+    }
+
+    .card h3, .project-card h3 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #c4b5fd;
+      margin-bottom: 0.8rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .card p, .project-card p {
+      color: #cbd5e1;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .badge {
+      background: rgba(79, 70, 229, 0.3);
+      padding: 0.2rem 0.8rem;
+      border-radius: 2rem;
+      font-size: 0.8rem;
+      color: #c7d2fe;
+      margin-left: 0.5rem;
+    }
+
+    /* Contact */
+    #contact p {
+      font-size: 1.2rem;
+      margin: 0.8rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    #contact a {
+      color: #a5b4fc;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+      margin: 0 0.7rem;
+    }
+
+    #contact a:hover {
+      color: #ddd6fe;
+      text-shadow: 0 0 8px #818cf8;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      margin-top: 2rem;
+      background: rgba(2, 6, 23, 0.8);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid #4f46e5;
+      color: #94a3b8;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+      }
+      nav ul {
+        gap: 1.2rem;
+      }
+      .hero-text h2 {
+        font-size: 2.5rem;
+      }
+    }
+
+    /* Dropdown effect for nav (simple hover indication) */
+    i {
+      margin-right: 0.3rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="aurora-bg"></div>
+  <div class="grid-overlay"></div>
+
+  <header>
+    <nav>
+      <h1><i class="fas fa-robot"></i> Swapnadeep</h1>
+      <ul>
+        <li><a href="#about"><i class="fas fa-user-astronaut"></i> About</a></li>
+        <li><a href="#experience"><i class="fas fa-flask"></i> Experience</a></li>
+        <li><a href="#projects"><i class="fas fa-code-branch"></i> Projects</a></li>
+        <li><a href="#contact"><i class="fas fa-signal"></i> Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h2>Hi, I'm Swapnadeep</h2>
+      <p>Computer Science Student · ML · Robotics · AI Systems</p>
+      <a href="#projects" class="btn"><i class="fas fa-arrow-down"></i> View Projects</a>
+    </div>
+    <div class="hero-img">
+      <img src="assets/profile.jpg" alt="Swapnadeep Paty">
+    </div>
+  </section>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <p>
+      <i class="fas fa-graduation-cap"></i> Computer Science undergraduate with hands-on experience in machine learning pipelines, computer vision, and robotics. 
+      Research intern at IIT Kharagpur and DRDO, specializing in depth estimation, YOLOv8, reinforcement learning. 
+      Building autonomous systems that bridge perception and action.
+    </p>
+  </section>
+
+  <section id="experience">
+    <h2>Experience</h2>
+    <div class="experience-grid">
+      <div class="card">
+        <h3><i class="fas fa-microchip"></i> IIT Kharagpur</h3>
+        <p><span class="badge">Jun-Jul 2025</span></p>
+        <p>Engineered metric depth prediction pipelines. Resolved normalization issues, improved model reliability for multi-scale depth maps.</p>
+      </div>
+      <div class="card">
+        <h3><i class="fas fa-shield-alt"></i> DRDO</h3>
+        <p><span class="badge">Dec 2025 - Jan 2026</span></p>
+        <p>Computational modeling for ballistic analysis. Python algorithms for numerical simulation and defense research.</p>
+      </div>
+      <div class="card">
+        <h3><i class="fas fa-hand-sparkles"></i> Kazi Nazrul University</h3>
+        <p><span class="badge">Feb-Apr 2026</span></p>
+        <p>Self-learning robotic hand with PPO/DDPG. YOLOv8 + depth estimation for autonomous grasping.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <h3><i class="fas fa-drone"></i> Stereo-Depth Drone</h3>
+        <p>Quadcopter with stereo vision for 3D terrain estimation. Real-time point cloud generation using OpenCV & Open3D.</p>
+      </div>
+      <div class="project-card">
+        <h3><i class="fas fa-eye"></i> Monocular Depth</h3>
+        <p>Benchmarked Depth Anything V2 & Apple Depth Pro. Hyperparameter tuning for indoor/outdoor accuracy.</p>
+      </div>
+      <div class="project-card">
+        <h3><i class="fas fa-robot"></i> RL Robotic Arm</h3>
+        <p>Autonomous pick-and-place with PPO in PyBullet. YOLOv8 integration for dynamic object localization.</p>
+      </div>
+      <div class="project-card">
+        <h3><i class="fas fa-check-double"></i> Fact-Check AI</h3>
+        <p>Transformer NLP system with Flask backend. spaCy NER, automated evidence retrieval, verdict generation.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <p><i class="fas fa-envelope"></i> swapnadeeppaty0214@gmail.com</p>
+    <p>
+      <a href="https://www.linkedin.com/in/swapnadeep-paty-119a7928b/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a> |
+      <a href="https://github.com/swapnadeeppaty" target="_blank"><i class="fab fa-github"></i> GitHub</a> |
+      <span><i class="fas fa-map-marker-alt"></i> Kolkata, India</span>
+    </p>
+  </section>
+
+  <footer>
+    <p>© 2026 Swapnadeep Paty — Engineered with precision & neural vibes</p>
+  </footer>
+
+  <script>
+    // Smooth scroll and interactive hover already handled by CSS.
+    // Additional futuristic console greeting
+    console.log('🚀 Swapnadeep Paty | Portfolio v2.0 | Neural link established.');
+  </script>
+</body>
+</html>
